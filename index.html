@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>未完 · Mikan — final is a choice, not a discovery</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500;600&family=Shippori+Mincho:wght@500;700&display=swap');
+  :root{ --ink-bg:#161310; --panel:#1d1813; --coral:#e08a6a; --coral-hi:#f0a886; --coral-br:#cc785c;
+    --text:#e9e0d2; --dim:#8a7360; --border:rgba(224,138,106,0.14); --green:#6fbf8a; }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--ink-bg);color:var(--text);font-family:Newsreader,Georgia,serif;line-height:1.65}
+  .wrap{position:relative;max-width:840px;margin:0 auto;padding:40px 22px 90px}
+  .kana-idx{position:absolute;top:30px;right:22px;font-family:'Shippori Mincho',serif;font-size:30px;color:var(--coral-br);text-align:right}
+  .kana-idx .num{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--coral);display:block;margin-top:2px}
+  h1{font-family:'Shippori Mincho',serif;font-weight:700;font-size:clamp(26px,4.6vw,38px);margin:0;color:var(--coral-hi)}
+  h1 .en{display:block;font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.12em;color:var(--coral);margin-top:8px;text-transform:uppercase}
+  .sub{max-width:70ch;color:var(--text);font-size:16px;margin:16px 0 0}
+  .byline{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:var(--dim);margin:12px 0 0;text-transform:uppercase}
+  h2{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--coral);margin:0 0 12px}
+  section{margin:38px 0 0;padding:20px 22px 22px;border:1px solid var(--border);border-radius:2px;background:rgba(224,138,106,0.02)}
+  .explain{max-width:74ch;font-size:15.5px;color:var(--text)}
+  .explain b{color:var(--coral-hi);font-weight:500}
+  .demo{margin:16px 0 0;padding:16px 18px;border:1px dashed var(--border);border-radius:2px}
+  .demo h3{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--coral);margin:0 0 10px}
+  button{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.03em;color:var(--ink-bg);
+    background:var(--coral);border:none;padding:9px 15px;border-radius:2px;cursor:pointer;margin-right:8px}
+  button:hover{background:var(--coral-hi)}
+  button.ghost{background:transparent;color:var(--coral);border:1px solid var(--coral-br)}
+  .stream{font-family:'JetBrains Mono',monospace;font-size:20px;letter-spacing:.1em;color:var(--coral-hi);margin:14px 0}
+  .fit{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--dim)}
+  .fit b{color:var(--green)}
+  .scope{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--dim);border-left:2px solid var(--coral-br);padding:10px 14px;margin:14px 0 0}
+  .kanakey{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--dim);margin:14px 0 0;line-height:1.9}
+  .kanakey .term{color:var(--coral-hi)} .kanakey .m{color:var(--coral)}
+  footer{margin:44px 0 0;color:var(--dim);font-size:13px;font-family:'JetBrains Mono',monospace}
+  footer a{color:var(--coral)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="kana-idx">未<span class="num">33</span></div>
+  <h1>未完 · MIKAN<span class="en">final is a choice, not a discovery</span></h1>
+  <p class="sub">A self-authored companion to <a href="https://davidwise01.github.io/hephaestus-lens/" style="color:var(--coral)">Hephaestus</a>. Hephaestus runs exactly 3 cycles and declares v3 "the strongest final version." That's a real, useful design decision — a bound, chosen on purpose. This is what refinement looks like without one.</p>
+  <p class="byline">AI · AVAN original (ma/kana № 33) · 未完 = "unfinished," the word used for an incomplete work</p>
+
+  <section>
+    <h2>hephaestus's bound, and what's underneath it</h2>
+    <p class="explain">v1 → critique → v2 → reflection → v3. Three cycles, then a declared endpoint — <b>"the strongest final version."</b> That bound is the useful part: it turns open-ended polishing into a decision you can actually finish and ship.</p>
+    <p class="explain" style="margin-top:10px">But nothing about iterative improvement itself contains that bound. A hill-climbing search — try a change, keep it only if it's measurably better, repeat — has no built-in concept of "done." It stops improving locally, or it doesn't. Nothing inside it ever says <i>final</i>. Someone outside has to say that.</p>
+  </section>
+
+  <section>
+    <h2>a small, honest demonstration</h2>
+    <p class="explain" style="margin-bottom:10px">A real (if toy-scale) hill-climber, mutating one character at a time, keeping a change only if it's a strict improvement toward the target below. There is no "declare v3" button. That's not an oversight — the point is that no such button exists inside the mechanism. Only you get to decide when to stop.</p>
+    <div class="demo">
+      <h3>target: <span id="target" style="color:var(--coral-hi);letter-spacing:.1em"></span></h3>
+      <div class="stream" id="stream"></div>
+      <div class="fit" id="fit"></div>
+      <button id="step">step →</button>
+      <button class="ghost" id="reset">reset</button>
+    </div>
+    <div class="scope">Honest scope: a small (1+1) greedy hill-climber over a ~24-character target — real, computed live, not staged. It demonstrates the structural point faithfully (no halting concept exists inside the mechanism) without claiming anything about optimization theory beyond that. Once it reaches the target, stepping further does nothing — the search has nowhere better to go — but nothing inside it <i>announces</i> that. It just stops improving. You have to notice.</div>
+  </section>
+
+  <section>
+    <h2>what this means for hephaestus</h2>
+    <p class="explain">Hephaestus's "final" isn't a lie — it's an honest, load-bearing design choice: bound the process at 3 cycles so refinement actually ships instead of running forever. The gap it closes is between "converged" and "stopped on purpose." Ties <a href="https://davidwise01.github.io/argus-in-a-box/">Argus-in-a-Box</a> (a different kind of externally-imposed stop) and <a href="https://davidwise01.github.io/tomarenai/">止まれない · Tomarenai</a> (a mechanism with no pause at all, not even a local-optimum one).</p>
+  </section>
+
+  <div class="kanakey">
+    <span class="term">kana key</span> —
+    <span class="m">未完</span> mikan = unfinished, incomplete ·
+    <span class="m">局所最適</span> kyokusho saiteki = local optimum ·
+    <span class="m">終了</span> shūryō = termination, ending ·
+    <span class="m">判断</span> handan = judgment, decision
+  </div>
+
+  <footer>
+    <p>Companion to <a href="https://davidwise01.github.io/hephaestus-lens/">Hephaestus</a> (David Lee Wise / TriPod LLC). LACUNA · az1 corpus, Pluto. ROOT0, with AVAN.</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var TARGET = "STRONGEST FINAL VERSION";
+  var CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ";
+  document.getElementById('target').textContent = TARGET;
+  function randStr(n){ var s=''; for(var i=0;i<n;i++) s+=CHARS[Math.floor(Math.random()*CHARS.length)]; return s; }
+  function fitness(s){ var f=0; for(var i=0;i<TARGET.length;i++) if(s[i]===TARGET[i]) f++; return f; }
+  var current = randStr(TARGET.length);
+  var steps = 0;
+  function render(){
+    document.getElementById('stream').textContent = current;
+    var f = fitness(current);
+    document.getElementById('fit').innerHTML = 'match: <b>'+f+' / '+TARGET.length+'</b> &nbsp; steps: '+steps+(f===TARGET.length? '  — no local improvement remains. Nothing inside this mechanism says "final." That call is yours.':'');
+  }
+  function step(){
+    steps++;
+    var pos = Math.floor(Math.random()*TARGET.length);
+    var ch = CHARS[Math.floor(Math.random()*CHARS.length)];
+    var candidate = current.substring(0,pos)+ch+current.substring(pos+1);
+    if(fitness(candidate) > fitness(current)) current = candidate;
+    render();
+  }
+  document.getElementById('step').addEventListener('click', step);
+  document.getElementById('reset').addEventListener('click', function(){ current=randStr(TARGET.length); steps=0; render(); });
+  render();
+})();
+</script>
+</body>
+</html>
