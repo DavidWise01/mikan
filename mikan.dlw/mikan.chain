@@ -1,0 +1,9 @@
+ROOT0-DLW-CHAIN-v1
+index : 342
+slug  : mikan
+seal  : fee524be67096dd45818113d96307ed5e72d76a9b38f089941392cc7944f0074
+prev  : 9814c28ebbc3f8290fc702581406925e77ffd4c3b2089aca9f8b676c15557997
+link  : fc0443192afee1eda15473afa7bddaf28ef3278b0f66ebcf76c1aeff87664733
+head  : 3447d3a0533aaf1e29a8bdc67a9774884fb3ae9dbc8a17064b7a008ca3c4ec90
+
+— the tether: link = sha256(index|slug|seal|prev). the chain head commits to the whole corpus.
